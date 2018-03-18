@@ -1,30 +1,55 @@
 
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
-        <script type='text/javascript' src='./js/sheetsee.js'></script>
-        <script type='text/javascript'>    
-            var publicSpreadsheetUrl = '1RqBq09Pn8diBXkrxzn4IZFKK8gckhMXXBWg2p4mG4Qo';
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Audiences Demo</title>
+</head>
+<body>
+    <h1>Audiences Demo</h1>
 
-            function init() {
-                Tabletop.init( { key: publicSpreadsheetUrl,
-                     callback: showInfo 
-                 } )
-            }
+    <input id="fullTableFilter" type="text" placeholder="filter by.."></input>
+    <div id="fullTable">Loading...</div>
 
-            function showInfo(data, tabletop) {
-                alert('Successfully processed!')
-                console.log(data);
-            }
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
+    <script type='text/javascript' src='./js/sheetsee.js'></script>
+    
+    <script id="fullTable_template" type="text/html">
+        <table>
+            <tr><th class="tHeader">Customer ID</th><th class="tHeader">Email</th><th class="tHeader">One Time Customer</th><th class="tHeader">Repeat Customer</th></tr>
+              {{#rows}}
+                <tr><td>{{customer id}}</td><td>{{email}}</td><td>{{one time customer}}</td><td>{{repeat customer}}</td></tr>
+              {{/rows}}
+        </table>
+    </script>
 
-            window.addEventListener('DOMContentLoaded', init)
-        </script>
+    <script type='text/javascript'>    
+        var publicSpreadsheetUrl = '';
 
-    </head>
-    <body>
-        Hello World
-    </body>
+        document.addEventListener('DOMContentLoaded', function() {
+            var URL = "1RqBq09Pn8diBXkrxzn4IZFKK8gckhMXXBWg2p4mG4Qo"
+            Tabletop.init({key: URL, callback: showInfo})
+        })
 
+        function showInfo (data) {
+            console.log(data)
+            console.log(data.Audiences.elements)
+            var tableOptions = {
+                "data": data.Audiences.elements,
+                "pagination": 10,
+                "tableDiv": "#fullTable",
+                "filterDiv": "#fullTableFilter"
+            };
+            Sheetsee.makeTable(tableOptions);
+            Sheetsee.initiateTableFilter(tableOptions);
+        };
+        
+    </script>
+</body>
 </html>
