@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Audiences Demo</title>
 </head>
 <body>
@@ -22,10 +23,10 @@
     <script type='text/javascript' src='./js/sheetsee.js'></script>
     
     <script id="fullTable_template" type="text/html">
-        <table>
-            <tr><th class="tHeader">Customer ID</th><th class="tHeader">Email</th><th class="tHeader">One Time Customer</th><th class="tHeader">Repeat Customer</th></tr>
+        <table class="table">
+            <tr><th class="tHeader">Customer ID</th><th class="tHeader">Email</th><th class="tHeader">Installed Not Purchased</th><th class="tHeader">One Time Customer</th><th class="tHeader">Repeat Customer</th></tr>
               {{#rows}}
-                <tr><td>{{CustomerID}}</td><td>{{Email}}</td><td>{{OneTimeCustomer}}</td><td>{{RepeatCustomer}}</td></tr>
+                <tr><td>{{CustomerID}}</td><td>{{Email}}</td><td>{{InstalledNotPurchased}}</td><td>{{OneTimeCustomer}}</td><td>{{RepeatCustomer}}</td></tr>
               {{/rows}}
         </table>
     </script>
