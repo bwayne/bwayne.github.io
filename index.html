@@ -11,8 +11,11 @@
 </head>
 <body>
     <h1>Audiences Demo</h1>
-    <input id="fullTableFilter" type="text" placeholder="filter by.."></input>
-    <a class="clear">Clear</a>
+    <input id="clickMe" class="button" type="button" value="All Users" onclick="getAudience('all');" />
+    <input id="clickMe" class="button" type="button" value="Installed Not Purchased" onclick="getAudience('InstalledNotPurchased');" />
+    <input id="clickMe" class="button" type="button" value="One Time Customers" onclick="getAudience('OneTimeCustomer');" />
+    <input id="clickMe" class="button" type="button" value="Repeat Customers" onclick="getAudience('RepeatCustomer');" />
+    <br>
     <div id="fullTable">Loading...</div>
 
 
@@ -24,15 +27,15 @@
     
     <script id="fullTable_template" type="text/html">
         <table class="table">
-            <tr><th class="tHeader">Customer ID</th><th class="tHeader">Email</th><th class="tHeader">Installed Not Purchased</th><th class="tHeader">One Time Customer</th><th class="tHeader">Repeat Customer</th></tr>
+            <tr><th class="tHeader">Customer ID</th><th class="tHeader">Email</th></tr>
               {{#rows}}
-                <tr><td>{{CustomerID}}</td><td>{{Email}}</td><td>{{InstalledNotPurchased}}</td><td>{{OneTimeCustomer}}</td><td>{{RepeatCustomer}}</td></tr>
+                <tr><td>{{CustomerID}}</td><td>{{Email}}</td></tr>
               {{/rows}}
         </table>
     </script>
 
     <script type='text/javascript'>    
-        var publicSpreadsheetUrl = '';
+        var tableObj;
 
         document.addEventListener('DOMContentLoaded', function() {
             var URL = "1RqBq09Pn8diBXkrxzn4IZFKK8gckhMXXBWg2p4mG4Qo"
@@ -44,17 +47,26 @@
                 "data": data,
                 "pagination": 10,
                 "tableDiv": "#fullTable",
-                "filterDiv": "#fullTableFilter"
             };
             Sheetsee.makeTable(tableOptions);
-            Sheetsee.initiateTableFilter(tableOptions);
         }
 
         function initialRender (obj) {
+            tableObj = obj
+            console.log(tableObj)
             console.log(obj)
             console.log(obj.Audiences.elements)
             renderTable(obj.Audiences.elements)
         };
+
+        function getAudience (aud) {
+            if (aud=="all"){
+                renderTable(tableObj.Audiences.elements);
+            } else {
+                var matches = Sheetsee.getMatches(tableObj.Audiences.elements, 'x', aud);
+                renderTable(matches);
+            };
+        }
         
     </script>
 </body>
